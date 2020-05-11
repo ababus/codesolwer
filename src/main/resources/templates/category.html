@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="icon" href="templates/icons/favicon.ico"/>
+    <div th:replace="fragments/header :: header-css"/>
+    <title>CODESOLVER</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script>
+        $('body').on('click', '[data-editable]', function () {
+
+            var $el = $(this);
+            var oldName = $el.text();
+
+            var $input = $('<input/>').val($el.text());
+            $el.replaceWith($input);
+
+            var save = function () {
+                var $a = $('<a data-editable />').text($input.val());
+                $input.replaceWith($a);
+                var newName = $input.val();
+                window.location.replace("/saveCurrentCategory?oldName=" + oldName + "&newName=" + newName);
+            };
+
+            $input.one('blur', save).focus();
+        });
+
+        function addCategory() {
+            var category = prompt("Please new category:", "New category");
+            if (!(category == null || category === "")) {
+                window.location.replace("/addNewCategory?categoryName=" + category);
+            }
+        }
+
+    </script>
+</head>
+<body>
+<div th:replace="fragments/header :: header"/>
+<div class="categoryList">
+    <h2 class="categoryList">Categories</h2>
+    <div class="alert alert-danger" role="alert" th:if="${errorStack!= null}">
+        <p class="error-message" th:text="${errorStack}">Validation error</p>
+    </div>
+
+    <ul class="categoryList">
+        <li class="categoryList" th:each="category : ${categories.entrySet()} ">
+            <a data-editable class="categoryList" id="category" th:text="${category.value}"></a>
+        </li>
+        <li class="categoryList">
+            <a clasa="addCategory" onclick="addCategory()">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                Add new category </a>
+        </li>
+    </ul>
+
+</div>
+
+</div>
+<div th:replace="fragments/footer :: footer"/>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <div th:fragment="header-css">
+        <link rel="stylesheet" type="text/css"
+              href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
+
+        <link rel="stylesheet" th:href="@{/css/main.css}"
+              href="../../css/main.css"/>
+    </div>
+</head>
+<body>
+<div th:fragment="header">
+    <nav class="navbar navbar-expand-lg navbar-dark default-color-dark fixed-top" style="background-color: #de411b; ">
+        <div class="container">
+                <a class="navbar-brand" th:href="@{/index}">
+                    <img src="https://www.svgrepo.com/show/112096/coding.svg" width="21"
+                         height="21" class="d-inline-block align-top" alt=""/>
+                </a>
+                <a class="navbar-brand" th:href="@{/index}" id="headerBrand">Codesolver</a>
+
+
+            <ul class="nav navbar-nav" >
+            <li class="active" ><a th:href="@{/index}" id = "headerHome" >Home</a></li>
+                <li th:if="${#request.isUserInRole('ROLE_ADMIN')}" ><a th:href="@{/category}"  id = "headerCategories" >Categories</a></li>
+                <li><a th:if="${#request.isUserInRole('ROLE_ADMIN')}" class="whiteText"
+                       th:href="@{/users}">Users</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" >
+                <li ><a class= "whiteText" sec:authorize="!isFullyAuthenticated()" th:href="@{/registration}" ><span class="glyphicon glyphicon-user"></span> Sign
+                    Up</a></li>
+                <li><a class= "whiteText" sec:authorize="isAnonymous()" th:href="@{/login}"><span
+                        class="glyphicon glyphicon-log-in"></span>
+                    Login</a></li>
+                <li><a class= "whiteText" sec:authorize="isFullyAuthenticated()"th:href="@{/currentAccount}"><span class="glyphicon glyphicon-user"></span> <span
+                        th:text ="${#request.getUserPrincipal().getName()}" ></span></a></li>
+                <li><a class= "whiteText" sec:authorize="isFullyAuthenticated()" th:href="@{/logout}"><span
+                        class="glyphicon glyphicon-log-in"></span> Sign Out</a></li>
+            </ul>
+
+        </div>
+    </nav>
+</div>
+
+</body>
+</html>

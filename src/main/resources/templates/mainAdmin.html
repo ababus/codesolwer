@@ -1,0 +1,183 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="icon" href="templates/icons/favicon.ico"/>
+    <div th:replace="fragments/header :: header-css"/>
+    <title>CODESOLVER</title>
+
+    <script>
+        function myFunction(e) {
+            var val = e.target.text;
+            document.getElementById("demo").innerHTML += '<div class="tags">' +
+                '<p><a  disabled="true" href="" class="color1" id="tagSelected" >' + val + '</a></p></div>';
+        }
+    </script>
+</head>
+<body class="mainForm">
+<div th:replace="fragments/header :: header"/>
+<form method="post" th:action="@{/mainAdmin}" th:object="${task}">
+
+    <div>
+        <h1 style="display: inline-block;">
+                    <textarea id="task_name_adm" th:field="*{taskTitle}"
+                              th:text="${task.taskTitle}">Task name</textarea>
+        </h1>
+
+        <div class="dropdown">
+            <button class="dropbtn" disabled>Tests</button>
+            <div class="dropdown-content">
+                <a
+                        th:each="testsName : ${tests_names.entrySet()}"
+                        th:text="${testsName.value}"
+                        th:href="@{'/mainAdmin?taskId=' + ${task.getTaskId()} +'&testId='+ ${testsName.key}}"
+                ></a>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <button class="dropbtn" id="tags" disabled>Tags</button>
+            <div class="dropdown-content">
+                <!--<a-->
+                <!--th:each="testsName : ${tests_names.entrySet()}"-->
+                <!--th:text="${testsName.value}"-->
+                <!--onclick="myFunction(event)"-->
+                <!--&gt;</a>-->
+                <a
+                        th:text="tag1"
+                        onclick="myFunction(event)"
+                ></a>
+                <a
+                        th:text="tag2"
+                        onclick="myFunction(event)"
+                ></a>
+                <a
+                        th:text="tag3"
+                        onclick="myFunction(event)"
+                ></a>
+            </div>
+        </div>
+
+        <div id="demo">
+
+        </div>
+
+    </div>
+
+    <div>
+        <p class="accordion">Imports</p>
+        <div class="panel">
+            <textarea cols="177" rows="10" style="margin-top: 0;"
+                      title="Please, do not delete these imports, just add yours.">
+ import com.endava.internship.codesolver.logic.converter.testentities.Privilege;
+ import com.endava.internship.codesolver.logic.converter.testentities.User;
+ import java.util.*;
+ import java.util.Optional;
+ import java.util.Map.Entry;
+ import static java.util.Arrays.asList;
+ import java.util.function.Function;
+ import java.util.function.Predicate;
+ import java.util.stream.Collectors;
+ import static java.util.Arrays.asList;
+ import static java.util.Collections.singletonList;
+ import java.util.function.Function;
+ import java.util.function.Predicate;
+ import java.util.stream.Collectors;
+ import static java.util.stream.Collectors.*;
+            </textarea>
+        </div>
+
+        <p class="accordion">Task description</p>
+        <div class="panel" style="border: transparent; margin-bottom: -10px;">
+                <textarea
+                        name="Text1"
+                        cols="177"
+                        rows="7"
+                        autocomplete="off"
+                        autocorrect="off"
+                        autocapitalize="off"
+                        spellcheck="false"
+                        style="margin-top: 0;"
+                        th:field="*{description}"
+                        th:text="${task.description}"></textarea>
+
+        </div>
+
+        <script>
+            var acc = document.getElementsByClassName("accordion");
+            var i;
+
+            for (i = 0; i < acc.length; i++) {
+                acc[i].addEventListener("click", function () {
+                    this.classList.toggle("activeDrop");
+                    var panel = this.nextElementSibling;
+                    if (panel.style.maxHeight) {
+                        panel.style.maxHeight = null;
+                    } else {
+                        panel.style.maxHeight = panel.scrollHeight + "px";
+                    }
+                });
+            }
+        </script>
+    </div>
+
+    <table>
+
+        <tr>
+            <td colspan="2">
+                <a class="datahead">Task body</a>
+            </td>
+            <td colspan="2">
+                <a class="datahead">Task tests</a>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2"> <textarea cols="86" rows="15" class="description" id="content"
+                                       th:field="*{taskBody}"
+                                       th:text="${task.taskBody}">
+                    Demo task description
+                </textarea>
+
+            </td>
+
+
+            <td colspan="2">
+                <textarea name="Text1"
+                          class="inputform"
+                          cols="85"
+                          rows="15"
+                          autocomplete="off"
+                          autocorrect="off"
+                          autocapitalize="off"
+                          spellcheck="false" autofocus
+                          th:object=" ${currentTest}"
+                          th:field="*{testBody}"
+                          th:text="${currentTest.testBody}"></textarea>
+
+        </tr>
+
+        <tr>
+            <td colspan="2">
+
+            </td>
+            <td>
+                <a class="buttonAddTest btn btn-lg"
+                   th:href="@{'/addTest?taskId=' + ${task.getTaskId()}}"> Add test </a>
+            </td>
+            <td>
+                <input type="submit"
+                       class="btn btn-lg btn-primary btn-block"
+                       id="submitButton"
+                       width="4%"
+                       style=" margin-top: -20px; alignment: right "
+                       value="Modify Task"
+                />
+            </td>
+        </tr>
+
+    </table>
+
+
+</form>
+<div th:replace="fragments/footer :: footer"/>
+</body>
+</html>

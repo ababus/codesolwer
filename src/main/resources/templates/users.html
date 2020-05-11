@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="icon" href="templates/icons/favicon.ico"/>
+    <div th:replace="fragments/header :: header-css"/>
+    <title>CODESOLVER</title>
+</head>
+<body>
+<div th:replace="fragments/header :: header"/>
+<div class="container">
+    <div class='img'></div>
+    <div class="usersList">
+        <h2 class="usersList">All users</h2>
+
+        <table class="usersList" th:each="user:${users}">
+            <tr class="usersList">
+                <th class="userList">Username and role</th>
+                <th>Status</th>
+            </tr>
+            <tr class="usersList">
+                <td class="usersList" width="70%">
+                    <a class="usersList" th:text="${user.getUsername()} + ' - '"></a>
+                    <span class="usersList" th:if="${user.getRole()} == 'ROLE_ADMIN'">Administrator </span>
+                    <span class="usersList" th:if="${user.getRole()} == 'ROLE_USER'">User </span>
+                </td>
+                <td class="usersList" width="20%">
+                    <span class="usersList" th:if="${user.isActive()} == true">
+                        <span class="glyphicon glyphicon-user" style="color:green" title="Active"></span>
+                    </span>
+                    <span class="usersList" th:if="${user.isActive()} == true">
+                        <span class="glyphicon glyphicon-user" style="color:darkred" title="Inactive"></span>
+                    </span>
+                </td>
+            </tr>
+        </table>
+
+        <h2 class="usersList">Add new user</h2>
+        <table class="usersList">
+
+            <tr class="usersList">
+
+                <td class="usersList">
+                    <a class="usersList"> Username</a>
+                </td>
+                <td class="usersListEdit">
+                    <input id="firstPassword"
+                           class="form-control"
+                           placeholder="Password"
+                           type="password"
+                           title="Password must contains:
+                           At least 1 Uppercase
+                           At least 1 Lowercase
+                           At least 1 Number
+                           At least 1 Symbol, symbol allowed --> !@#$%^&*_=+-
+                           Minimum 8 chars and Maximum 12 chars"
+                           pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$"
+                    /></td>
+
+            </tr>
+            <tr>
+                <td class="usersList"></td>
+                <td class="usersListNew">
+                    <a><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add new user </a></td>
+            </tr>
+        </table>
+
+    </div>
+</div>
+<div th:replace="fragments/footer :: footer"/>
+</body>
+</html>

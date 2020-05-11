@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="icon" href="templates/icons/favicon.ico"/>
+    <div th:replace="fragments/header :: header-css"/>
+    <title>CODESOLVER</title>
+    <!--    <script>-->
+    <!--        function deletePost(id) {-->
+    <!--            var ask = window.confirm("Are you sure you want to delete this task?");-->
+    <!--            if (ask) {-->
+    <!--                document.cookie = "taskId=" + id;-->
+    <!--                window.location.href = "deleteTask";-->
+    <!--                window.alert("This task was successfully deleted. ");-->
+    <!--            }-->
+    <!--        }-->
+
+    <!--    </script>-->
+</head>
+<body>
+<div th:replace="fragments/header :: header"/>
+<div class="container">
+    <div class='img'></div>
+    <div class="tasklist">
+        <h2 class="tasklist">Tasks List</h2>
+
+        <table class="tasklist">
+
+            <tr class="tasklist" th:each="task:${tasks.entrySet()}">
+                <td width="5%" th:if="${#request.isUserInRole('ROLE_USER')}">
+                    <span class="glyphicon" th:value="${task.key}"
+                          th:classappend="${status.get(task.key)} ? ' glyphicon-ok-sign solved': ' glyphicon-play unsolved'  "></span>
+                </td>
+
+                <td class="tasklist">
+                    <a class="tasklist" th:if="${#request.isUserInRole('ROLE_USER')}" th:text="${task.value}"
+                       th:href="@{/main(taskId=${task.key})}"></a>
+                    <a class="tasklist" th:if="${#request.isUserInRole('ROLE_ADMIN')}" th:text="${task.value}"></a>
+                </td>
+
+                <td class="tasklistEdit" th:if="${#request.isUserInRole('ROLE_ADMIN')}"><a
+                        th:href="@{/mainAdmin(taskId=${task.key}, testId =${0})}"> <span
+                        class="glyphicon glyphicon-file" aria-hidden="true"></span> </a></td>
+
+                <td class="tasklistEdit" th:if="${#request.isUserInRole('ROLE_ADMIN')}">
+                    <a th:value="${task.key}"><!-- th:onclick="'deletePost(\''+ ${task.key} +'\');'">-->
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
+
+            </tr>
+            <tr th:if="${#request.isUserInRole('ROLE_ADMIN')}">
+                <td class="tasklist"></td>
+                <td colspan="2" class="tasklistNew">
+                    <a th:href="@{/mainAdmin}">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                        Add new task </a></td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+<div th:replace="fragments/footer :: footer"/>
+</body>
+</html>

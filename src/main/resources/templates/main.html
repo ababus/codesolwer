@@ -1,0 +1,123 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="icon" href="templates/icons/favicon.ico"/>
+    <div th:replace="fragments/header :: header-css"/>
+    <title>CODESOLVER</title>
+
+</head>
+<body class="mainForm">
+<div th:replace="fragments/header :: header"/>
+<form method="post" th:action="@{/main}" th:object="${task}">
+    <div>
+        <h1 class="task_name">
+        <textarea readonly id="task_name"
+                  th:field="*{taskTitle}" th:text="${task.taskTitle}">
+        </textarea>
+        </h1>
+    </div>
+    <div>
+        <p class="accordion">Imports</p>
+        <div class="panel">
+            <textarea cols="177" rows="10" style="margin-top: 0;">
+ import com.endava.internship.codesolver.logic.converter.testentities.Privilege;
+ import com.endava.internship.codesolver.logic.converter.testentities.User;
+ import java.util.*;
+ import java.util.Optional;
+ import java.util.Map.Entry;
+ import static java.util.Arrays.asList;
+ import java.util.function.Function;
+ import java.util.function.Predicate;
+ import java.util.stream.Collectors;
+ import static java.util.Arrays.asList;
+ import static java.util.Collections.singletonList;
+ import java.util.function.Function;
+ import java.util.function.Predicate;
+ import java.util.stream.Collectors;
+ import static java.util.stream.Collectors.*;
+            </textarea>
+        </div>
+
+        <script>
+            var acc = document.getElementsByClassName("accordion");
+            var i;
+
+            for (i = 0; i < acc.length; i++) {
+                acc[i].addEventListener("click", function () {
+                    this.classList.toggle("activeDrop");
+                    var panel = this.nextElementSibling;
+                    if (panel.style.maxHeight) {
+                        panel.style.maxHeight = null;
+                    } else {
+                        panel.style.maxHeight = panel.scrollHeight + "px";
+                    }
+                });
+            }
+        </script>
+    </div>
+    <table>
+
+        <tr>
+            <td colspan="2">
+                <label for="content" class="datahead">Task description</label>
+                <textarea readonly cols="85" rows="15" class="description" id="content"
+                          th:field="*{description}"
+                          th:text="${task.description}">
+                    Demo task description
+                </textarea>
+
+            </td>
+            <td colspan="2">
+                <label for="inputform" class="datahead">Your solution</label>
+                <textarea name="Text1"
+                          class="inputform"
+                          id="inputform"
+                          cols="85"
+                          rows="15"
+                          autocomplete="off"
+                          autocorrect="off"
+                          autocapitalize="off"
+                          spellcheck="false" autofocus th:field="*{taskBody}" th:text="${task.taskBody}">
+                </textarea>
+
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <a class="datahead" style="alignment: left">Result: </a>
+            </td>
+            <td>
+                <a class="datahead"></a>
+                <a class="datahead"
+                   style="  margin-top:  -97px; margin-left: 45px; position: relative;"
+                   th:text=" ${remained_attempts} + ' attempts remained'"> </a>
+            </td>
+            <td>
+                <input type="submit"
+                       class="btn btn-lg btn-primary btn-block"
+                       id="submitButton"
+                       width="4%"
+                       style="margin-left: 190px; margin-top: -50px; margin-bottom: -120px; alignment: right; "
+                       th:if="${remained_attempts > 0}"
+                       value="Submit"/>
+            </td>
+        </tr>
+    </table>
+
+    <textarea readonly class="outputform"
+              placeholder="Here will be result of your tests"
+              name="Text1"
+              cols="177"
+              rows="7"
+              autocomplete="off"
+              autocorrect="off"
+              autocapitalize="off"
+              spellcheck="false"
+              width="80%"
+              style="display: inline-block;"
+              th:text="${testres}"></textarea>
+
+</form>
+<div th:replace="fragments/footer :: footer"/>
+</body>
+</html>

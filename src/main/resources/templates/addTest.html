@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="icon" href="templates/icons/favicon.ico"/>
+    <div th:replace="fragments/header :: header-css"/>
+    <title>CODESOLVER</title>
+
+</head>
+<body class="mainForm">
+<div th:replace="fragments/header :: header"/>
+<form method="post" th:action="@{/addTest}">
+
+    <h1 style="margin-top: 10px; margin-left: 30px; margin-bottom: -15px">Add test</h1>
+
+    <div th:if="${addingTestRes} != null">
+        <br/>
+        <br/>
+        <a class="alert alert-danger"
+           style="margin-top: 230px; margin-bottom: 30px; margin-left: 20px;"
+           th:text="${addingTestRes}"></a></div>
+
+    <textarea cols="125" rows="20" th:object="${newTest}" th:field="*{testBody}" th:text="${newTest.testBody}">
+
+    </textarea>
+
+    <input type="submit"
+           class="btn btn-lg btn-primary btn-block"
+           id="testButton"
+           width="4%"
+           style=" margin-top: -20px; alignment: right "
+           value="Add test"
+    />
+
+</form>
+<div th:replace="fragments/footer :: footer"/>
+</body>
+</html>

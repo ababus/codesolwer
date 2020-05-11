@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="icon" href="templates/icons/favicon.ico"/>
+    <div th:replace="fragments/header :: header-css"/>
+    <title>CODESOLVER</title>
+</head>
+<body>
+<div th:replace="fragments/header :: header"/>
+<div>
+    <br/>
+    <br/>
+    <h3> USERNAME:
+        <span th:text="${#authentication.getName()}"></span><br/><br/>
+        Your progress:
+    </h3>
+</div>
+
+<div class="progress" style="width:90%; height: 55px; ">
+    <div class="progress-bar progress-bar-success" role="progressbar"
+         th:style="' position: relative; display: inline-block; width:'+ ${success} +'%;'">
+        <span class="text-progress" style="color: #f1f1f1; font-size: 17px;" th:if=" ${success} > 0 " >Passed</span></div>
+    <div class="progress-bar progress-bar-warning" role="progressbar"
+         th:style="' position: relative; display: inline-block; width:'+ ${progress} +'%;'">
+        <span class="text-progress" style="color: #f1f1f1" th:if=" ${progress} > 0 ">Currently attempting</span></div>
+    <div class="progress-bar progress-bar-danger" role="progressbar"
+         th:style="' position: relative; display: inline-block; width:'+ ${fail} +'%;'">
+        <span class="text-progress" style="color: #f1f1f1" th:if=" ${fail} > 0 ">Failed</span></div>
+</div>
+</div>
+<br/>
+<h3>Your history:</h3>
+<textarea readonly class="description" style="width:90%" rows="17" th:text="*{statistic}">
+
+</textarea>
+
+</div>
+<div th:replace="fragments/footer :: footer"/>
+</body>
+</html>

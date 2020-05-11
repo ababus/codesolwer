@@ -1,0 +1,2 @@
+ALTER TABLE users_tasks
+ADD solution VARCHAR2(2000) NOT NULL;

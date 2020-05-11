@@ -1,0 +1,448 @@
+
+:root {
+    --font-color: #2b2b2b;
+    --orange-color: #de411b;
+    --white-font-color: whitesmoke;
+}
+
+body {
+    color: var(--font-color);
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: 0 20px 20px;
+    display: inline-block;
+    background-size: 75% 50%;
+}
+
+footer {
+    color: var(--white-font-color);
+}
+
+a {
+    color: var(--font-color);
+}
+
+a:hover {
+    text-decoration: none;
+    color: var(--orange-color);
+}
+
+#headerBrand {
+    color: var(--white-font-color);
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    font-size: 24px;
+    font-style: normal;
+    font-variant: normal;
+}
+
+#headerHome, #headerCategories, .login, #headerHome:hover, #headerCategories:hover, .login:hover {
+    color: var(--white-font-color);
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    font-size: 17px;
+    font-style: normal;
+    font-variant: normal;
+    background-color: var(--orange-color);
+}
+
+.whiteText {
+    color: var(--white-font-color);
+    font-size: 16px;
+}
+
+input:active, input:hover, input:focus {
+    box-shadow: 0 0 10px var(--font-color);
+}
+
+header {
+    width: 80%;
+}
+
+div.tasklist, div.categoryList, div.usersList {
+    margin: 20px;
+}
+
+h2.tasklist, h2.categoryList, h2.usersList {
+    font: 400 40px/1.5 Helvetica, Verdana, sans-serif;
+    margin: 0;
+    margin-bottom: 20px;
+    padding: 0;
+}
+
+tr.tasklist, ul.categoryList, tr.usersList {
+    list-style-type: none;
+    margin: 20px;
+    padding: 0;
+}
+
+td.tasklist:last-child, li.categoryList:last-child, td.usersList:last-child {
+    border: none;
+}
+
+a.tasklist, a.categoryList, a.usersList {
+    color: var(--font-color);
+}
+
+td.tasklist, li.categoryList, td.usersList {
+    list-style-type: none;
+    height: 50px;
+    width: 900px;
+    color: var(--font-color);
+    font: 200 20px/1.5 Helvetica, Verdana, sans-serif;
+    text-decoration: none;
+    -webkit-transition: font-size 0.3s ease, background-color 0.3s ease;
+    -moz-transition: font-size 0.3s ease, background-color 0.3s ease;
+    -o-transition: font-size 0.3s ease, background-color 0.3s ease;
+    transition: font-size 0.3s ease, background-color 0.3s ease;
+    display: block;
+}
+
+tr.tasklist:hover td.tasklist, li.categoryList:hover, tr.usersList:hover td.usersList {
+    font-size: 26px;
+    width: 900px;
+    text-decoration: none;
+    color: #181818;
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+td.usersList, tr.usersList:hover td.usersList {
+    width: 800px;
+}
+
+.solved {
+    margin-top: -15px;
+    font-size: 26px;
+    width: 10px;
+    color: rgba(63, 130, 16, 0.47);
+}
+
+.unsolved {
+    margin-top: -15px;
+    font-size: 26px;
+    width: 10px;
+    color: rgba(130, 43, 20, 0.47);
+}
+
+a.categoryList:hover {
+    text-decoration: none;
+}
+
+td.tasklistEdit {
+    text-align: center;
+    width: 90px;
+    font-size: 24px;
+}
+
+td.tasklistNew {
+    padding: 5px;
+    width: 110px;
+    font-size: 22px;
+}
+
+td.usersListEdit {
+    text-align: center;
+    width: 200px;
+    font-size: 24px;
+}
+
+td.usersListNew {
+    padding: 5px;
+    width: 110px;
+    font-size: 20px;
+}
+
+textarea {
+    color: #2b2b2b;
+    resize: none;
+    background-color: #f1f1f1;
+    margin: 40px 0 40px 20px;
+}
+
+table {
+    border: 2px transparent;
+    margin-top: -20px;
+
+    magrin-left: 10px
+}
+
+.datahead {
+    margin-top: 50px;
+    margin-left: 20px;
+    margin-bottom: -20px;
+    display: table;
+    width: auto;
+    padding: 25px;
+    color: var(--font-color);
+    text-align: center;
+    font-size: 21px;
+    letter-spacing: 1px;
+}
+
+.datahead:hover {
+    margin-top: 50px;
+    margin-left: 20px;
+    margin-bottom: -20px;
+    display: table;
+    width: auto;
+    padding: 25px;
+    color: var(--font-color);
+    text-align: center;
+    font-size: 21px;
+    letter-spacing: 1px;
+}
+
+#task_name {
+    margin-top: 20px;
+    margin-bottom: -50px;
+    border: 0;
+    background-color: transparent;
+    width: 100%;
+    align-content: center;
+    pointer-events: none;
+}
+
+#task_name:active, #task_name:hover, #task_name::selection {
+    border: 1px transparent;
+    background-color: transparent;
+    width: 100%;
+    box-shadow: transparent;
+}
+
+textarea.task_name {
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-bottom: -20px;
+    width: 450px;
+    height: 60px;
+    padding: 5px;
+    color: var(--font-color);
+    text-align: left;
+    font-size: 21px;
+    letter-spacing: 1px;
+    overflow: hidden;
+}
+
+#task_name_adm {
+    margin-top: 5px;
+    margin-left: 20px;
+    margin-bottom: -20px;
+    width: 620px;
+    height: 55px;
+    padding: 7px;
+    font-size: 26px;
+    align-content: center;
+}
+
+.outputform {
+    margin-top: 17px;
+}
+
+#submitButton {
+    background-color: #de411b;
+    border: #de411b;
+    width: 190px;
+    height: 40px;
+    margin-left: 449px;
+}
+
+#testButton {
+    background-color: #de411b;
+    border: #de411b;
+    width: 190px;
+    height: 40px;
+    margin-left: 730px;
+}
+
+.mainForm {
+    magrin-left: 70px;
+}
+
+.text-progress {
+    color: var(--font-color);
+    left: 0;
+    position: absolute;
+    bottom: 10px;
+    font-size: 15px;
+    padding: 3px 5px;
+}
+
+.dropbtn {
+    background-color: #de411b;
+    font: 18px Arial;
+    color: white;
+    border-radius: 5px;
+    padding: 16px;
+    border: var(--orange-color);
+    cursor: pointer;
+    height: 55px;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    margin-top: 30px;
+    margin-left: 15px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #de411b;
+}
+
+a.buttonAddTest {
+    font: 18px Arial;
+    text-decoration: none;
+    background-color: #de411b;
+    color: whitesmoke;
+    padding: 10px 16px 9px 16px;
+    border: 1px solid #de411b;
+    border-radius: 5px;
+    margin-top: -31px;
+    margin-left: 320px;
+    alignment: center;
+    position: absolute;
+}
+
+a.buttonAddTest:hover {
+    text-decoration: none;
+    color: whitesmoke;
+    -webkit-box-shadow: 1px 1px 15px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 1px 1px 15px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 1px 1px 15px 0px rgba(0, 0, 0, 0.75);
+}
+
+#demo {
+    position: absolute;
+    max-width: 360px;
+    margin-left: 850px;
+    margin-top: -50px;
+}
+
+.tags a {
+    position: absolute;
+    display: inline-block;
+    height: 26px;
+    line-height: 26px;
+    margin: 0 12px 8px 0;
+    padding: 0 14px 0 12px;
+    background: #777;
+    -moz-border-radius-bottomleft: 5px;
+    -webkit-border-bottom-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -webkit-border-top-left-radius: 5px;
+    border-top-left-radius: 5px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    color: #fff;
+    font-size: 14px;
+    text-decoration: none;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    font-weight: bold;
+}
+
+.tags a:before {
+    content: "";
+    position: absolute;
+    top: 10px;
+    right: 1px;
+    float: left;
+    width: 5px;
+    height: 5px;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    background: #fff;
+    -moz-box-shadow: -1px -1px 2px rgba(0, 0, 0, 0.4);
+    -webkit-box-shadow: -1px -1px 2px rgba(0, 0, 0, 0.4);
+    box-shadow: -1px -1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.tags a:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: -12px;
+    width: 0;
+    height: 0;
+    border-color: transparent transparent transparent #777;
+    border-style: solid;
+    border-width: 12px 0 14px 12px;
+}
+
+.tags a.color1 {
+    background: #de6724;
+}
+
+.tags a.color1:after {
+    border-color: transparent transparent transparent #de6724
+}
+
+.tags a:hover {
+    background: #222 !important
+}
+
+.tags a:hover:after {
+    border-color: transparent transparent transparent #222 !important
+}
+
+.accordion {
+    background-color: #eee;
+    cursor: pointer;
+    padding: 10px;
+    text-align: left;
+    outline: none;
+    font-size: 20px;
+    margin-top: 21px;
+    margin-left: 20px;
+    width: 82%;
+    box-shadow: transparent;
+    border: 0;
+}
+
+.accordion:after {
+    content: '\002B';
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+    box-shadow: transparent;
+    border: 0;
+}
+
+.activeDrop:after {
+    content: "\2212";
+    box-shadow: transparent;
+    border: 0;
+}
+
+.panel {
+    box-shadow: transparent;
+    border: 0 none;
+    max-height: 0;
+    overflow: hidden;
+}

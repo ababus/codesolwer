@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="icon" href="templates/icons/favicon.ico"/>
+    <div th:replace="fragments/header :: header-css"/>
+    <title>Registration</title>
+</head>
+<body>
+<div th:replace="fragments/header :: header"/>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+
+            <div th:if="${param.success}">
+                <div class="alert alert-info">
+                    You've successfully registered to our awesome app!
+                </div>
+            </div>
+
+            <h1>Registration</h1>
+            <form th:action="@{/registration}" th:object="${user}" method="post">
+
+                <p class="alert alert-danger"
+                   th:if="${#fields.hasGlobalErrors()}"
+                   th:each="error : ${#fields.errors('global')}"
+                   th:text="${error}">Validation error</p>
+
+                <div class="form-group"
+                     th:classappend="${#fields.hasErrors('username')}? 'has-error':''">
+                    <input id="login"
+                           class="form-control"
+                           placeholder="Username"
+                           th:field="*{username}" />
+                    <p class="error-message"
+                       th:each="error : ${#fields.errors('username')}"
+                       th:text="${error}">Validation error</p>
+                </div>
+                <div class="form-group"
+                     th:classappend="${#fields.hasErrors('confirmUsername')}? 'has-error':''">
+
+                    <input id="confirmUsername"
+                           class="form-control"
+                           placeholder="Confirm username"
+                           th:field="*{confirmUsername}"/>
+                    <p class="alert alert-danger"
+                       th:each="error : ${#fields.errors('confirmUsername')}"
+                       th:text="${error}">Validation error</p>
+                </div>
+                <div class="form-group"
+                     th:classappend="${#fields.hasErrors('password')}? 'has-error':''">
+                    <input id="firstPassword"
+                           class="form-control"
+                           placeholder="Password"
+                           type="password"
+                           title="Password must contains:
+                           At least 1 Uppercase
+                           At least 1 Lowercase
+                           At least 1 Number
+                           At least 1 Symbol, symbol allowed --> !@#$%^&*_=+-
+                           Minimum 8 chars and Maximum 12 chars"
+                           pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$"
+                           th:field="*{password}"/>
+                    <p class="alert alert-danger"
+                       th:each="error : ${#fields.errors('password')}"
+                       th:text="${error}">Validation error</p>
+                </div>
+                <div class="form-group"
+                     th:classappend="${#fields.hasErrors('confirmPassword')}? 'has-error':''">
+                    <input id="confirmPassword"
+                           class="form-control"
+                           type="password"
+                           pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$"
+                           placeholder="Confirm password"
+                           th:field="*{confirmPassword}"/>
+                    <p class="alert alert-danger"
+                       th:each="error : ${#fields.errors('confirmPassword')}"
+                       th:text="${error}">Validation error</p>
+                </div>
+                <div class="form-group"
+                     th:classappend="${#fields.hasErrors('terms')}? 'has-error':''">
+                    <input id="terms"
+                           type="checkbox"
+                           th:field="*{terms}"/>  
+                    <label class="control-label" for="terms">
+                        I agree with the <a href="#">terms and conditions</a> for Registration.
+                    </label>
+                    <p class="alert alert-danger"
+                       th:each="error : ${#fields.errors('terms')}"
+                       th:text="${error}">Validation error</p>
+                </div>
+                <div class="form-group">
+                    <button type="submit"
+                            class="btn btn-lg btn-primary btn-block"
+                            style="background-color: #de411b; border: #de411b; ">
+                        Register
+                    </button>
+                    <span>Already registered? <a href="/" th:href="@{/login}" style="color: #de411b;">Login here</a></span>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+<div th:replace="fragments/footer :: footer"/>
+</body>
+</html>

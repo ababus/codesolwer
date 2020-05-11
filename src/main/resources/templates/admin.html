@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <link rel="icon" href="templates/icons/favicon.ico"/>
+        <div th:replace="fragments/header :: header-css"/>
+        <title>CODE SOLVER</title>
+    </head>
+
+    <body>
+        <div th:replace="fragments/header :: header"/>
+
+        <h1>Hello There!</h1>
+
+        <div>
+            <textarea style="width: 68%; height: 80%; margin: 5px" readonly name="Text1" class="testout" cols="80" rows="15">
+                Task
+            </textarea>
+            <textarea style="width: 30%; height: 80%; margin: 5px" readonly name="Text1" class="testout" cols="80" rows="15">
+                Tests
+            </textarea>
+        </div>
+
+        <div>
+            <!--<textarea style="width: 68%; height: 80px;" readonly name="Text1" class="testout" cols="80" rows="15">-->
+                <!--Tags-->
+            <!--</textarea>-->
+            <button style="width: 10%; height: 60px; background-color: #4CAF50;">Submit</button>
+        </div>
+
+        <!--<div class="container">-->
+
+            <!--<div class="tasklist">-->
+                <!--<h2 class="tasklist">Tasks List</h2>-->
+                <!--<ul class="tasklist" th:each="instance : ${tasks.entrySet()}">-->
+                    <!--<a class="tasklist" th:href="@{/main(taskId=${instance.key})}">-->
+                        <!--<li class="tasklist" th:text="${instance.value}"></li>-->
+                    <!--</a>-->
+                <!--</ul>-->
+            <!--</div>-->
+        <!--</div>-->
+
+        <div th:replace="fragments/footer :: footer"/>
+    </body>
+</html>
