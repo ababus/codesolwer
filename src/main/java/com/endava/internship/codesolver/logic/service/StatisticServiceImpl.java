@@ -7,8 +7,6 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Set;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -96,8 +94,8 @@ public class StatisticServiceImpl implements StatisticService {
                 .orElse(maxAllowedAttempts);
     }
 
-    public Map<String, Boolean> getStatusForCurrentTasks(Set<String> tasksIds) {
-        Map<String, Boolean> status = new HashMap<>();
+    public Map<String, Integer> getStatusForCurrentTasks(Set<String> tasksIds) {
+        Map<String, Integer> status = new HashMap<>();
         for (String taskId : tasksIds) {
             status.put(taskId, getStatus(taskId));
         }
@@ -122,10 +120,22 @@ public class StatisticServiceImpl implements StatisticService {
         }
     }
 
-    private boolean getStatus(String taskId) {
-        return userStatisticsRepository.findByUserAndTask(userService.getCurrentUser(), getCurrentTask(taskId))
-                .map(UserStatistics::isPassed)
-                .orElse(false);
+    /**
+     * 1- true 2- undefined 3- false 4-failed
+     */
+    private int getStatus(String taskId) {
+        final Optional<UserStatistics> userStatistics = userStatisticsRepository.findByUserAndTask(userService.getCurrentUser(), getCurrentTask(taskId));
+        if (userStatistics.isPresent()) {
+            final UserStatistics statistics = userStatistics.get();
+            if (!statistics.isPassed() && statistics.getAttempts() != 0 && statistics.getAttempts() != maxAllowedAttempts) {
+                return 2;
+            }
+            if (!statistics.isPassed() && statistics.getAttempts() == maxAllowedAttempts) {
+                return 4;
+            }
+            return statistics.isPassed() ? 1 : 3;
+        }
+        return 3;
     }
 
     private void updateStatistics(TaskResult taskResult, String taskBody, String taskId) {

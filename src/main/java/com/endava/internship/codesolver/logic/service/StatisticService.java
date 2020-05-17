@@ -18,7 +18,7 @@ public interface StatisticService {
 
     String getSolutionOrTaskBody(String taskId);
 
-    Map<String, Boolean> getStatusForCurrentTasks(Set<String> tasks);
+    Map<String, Integer> getStatusForCurrentTasks(Set<String> tasks);
 
     void saveTasksForUser (List<Task> taskList, User user);
 }

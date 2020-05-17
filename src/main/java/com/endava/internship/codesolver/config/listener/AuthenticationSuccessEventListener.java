@@ -15,7 +15,6 @@ public class AuthenticationSuccessEventListener implements ApplicationListener<A
     private final LoginAttemptService loginAttemptService;
 
     public void onApplicationEvent(AuthenticationSuccessEvent e) {
-
         loginAttemptService.refreshAttempts(e.getAuthentication().getName());
     }
 }

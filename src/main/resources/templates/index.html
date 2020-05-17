@@ -27,13 +27,27 @@
 
             <tr class="tasklist" th:each="task:${tasks.entrySet()}">
                 <td width="5%" th:if="${#request.isUserInRole('ROLE_USER')}">
-                    <span class="glyphicon" th:value="${task.key}"
-                          th:classappend="${status.get(task.key)} ? ' glyphicon-ok-sign solved': ' glyphicon-play unsolved'  "></span>
+                    <span th:value="${task.key}"
+                          th:if="${status.get(task.key)} == 1" class='glyphicon glyphicon-ok-sign solved'></span>
+                    <span th:value="${task.key}" style="font-size: 26px; color: #ffd500"
+                          th:if="${status.get(task.key)} == 2" class='glyphicon glyphicon-question-sign'></span>
+                    <span th:value="${task.key}"
+                          th:if="${status.get(task.key)} == 3" class='glyphicon glyphicon-play unsolved'></span>
+                    <span th:value="${task.key}" style="font-size: 26px; color: #ff3f4c"
+                          th:if="${status.get(task.key)} == 4" class='glyphicon glyphicon-remove-sign'></span>
                 </td>
 
                 <td class="tasklist">
-                    <a class="tasklist" th:if="${#request.isUserInRole('ROLE_USER')}" th:text="${task.value}"
-                       th:href="@{/main(taskId=${task.key})}"></a>
+                    <span th:if="${status.get(task.key)} != 4">
+                    <a class="tasklist" th:if="${#request.isUserInRole('ROLE_USER')}"
+                       th:text="${task.value}" th:href="@{/main(taskId=${task.key})}"></a>
+                    </span>
+
+                    <span th:if="${status.get(task.key)} == 4" style="text-decoration: line-through">
+                    <a class="tasklist" th:if="${#request.isUserInRole('ROLE_USER')}"
+                       th:text="${task.value}" th:href="@{/main(taskId=${task.key})}"></a>
+                    </span>
+
                     <a class="tasklist" th:if="${#request.isUserInRole('ROLE_ADMIN')}" th:text="${task.value}"></a>
                 </td>
 

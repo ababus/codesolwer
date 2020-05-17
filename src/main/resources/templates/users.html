@@ -12,27 +12,28 @@
     <div class="usersList">
         <h2 class="usersList">All users</h2>
 
-        <table class="usersList" th:each="user:${users}">
+        <table th:each="user:${users}">
             <tr class="usersList">
-                <th class="userList">Username and role</th>
-                <th>Status</th>
-            </tr>
-            <tr class="usersList">
-                <td class="usersList" width="70%">
-                    <a class="usersList" th:text="${user.getUsername()} + ' - '"></a>
-                    <span class="usersList" th:if="${user.getRole()} == 'ROLE_ADMIN'">Administrator </span>
-                    <span class="usersList" th:if="${user.getRole()} == 'ROLE_USER'">User </span>
-                </td>
-                <td class="usersList" width="20%">
-                    <span class="usersList" th:if="${user.isActive()} == true">
+                <td class="usersList" style="margin: 20px; background-color: transparent;">
+                    <a th:if="${user.isActive()} == true">
                         <span class="glyphicon glyphicon-user" style="color:green" title="Active"></span>
-                    </span>
-                    <span class="usersList" th:if="${user.isActive()} == true">
+                    </a>
+                    <a th:if="${user.isActive()} == false">
                         <span class="glyphicon glyphicon-user" style="color:darkred" title="Inactive"></span>
-                    </span>
+                    </a>
+                    <a class="usersList" th:text="' ' + ${user.getUsername()} + ' '"></a>
+<!--                                        <a style=" padding: 100px"> </a>-->
+                </td>
+                <td>
+                    <span style="font-size: 20px; width: 50px; margin: 2px"
+                          th:if="${user.getRole()} == 'ROLE_ADMIN'">Administrator </span>
+                    <span style="font-size: 20px; width: 50px; margin: 2px"
+                          th:if="${user.getRole()} == 'ROLE_USER'">User </span>
                 </td>
             </tr>
         </table>
+    </div>
+    <div class="usersList">
 
         <h2 class="usersList">Add new user</h2>
         <table class="usersList">

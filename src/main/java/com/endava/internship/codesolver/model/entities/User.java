@@ -50,7 +50,7 @@ public class User {
 
     @Column(name = "active")
     @Type(type = "org.hibernate.type.NumericBooleanType")
-    private boolean active;
+    private boolean active = true;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinTable(

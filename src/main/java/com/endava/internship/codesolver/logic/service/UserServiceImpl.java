@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,8 +17,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.endava.internship.codesolver.logic.dto.UserRolesDTO;
 import com.endava.internship.codesolver.logic.dto.UserRegistrationDto;
+import com.endava.internship.codesolver.logic.dto.UserRolesDTO;
 import com.endava.internship.codesolver.model.dao.RoleDao;
 import com.endava.internship.codesolver.model.dao.UserDao;
 import com.endava.internship.codesolver.model.entities.Role;
@@ -41,17 +42,21 @@ public class UserServiceImpl implements UserService {
 
     private final RoleDao roleRepository;
 
+    private final JdbcTemplate jdbcTemplate;
+
     public User findByLogin(String login) {
-        return userRepository.findByLogin(login).orElseThrow(() -> new NoSuchElementException("There is no such user in the system"));
+        return userRepository.findByLogin(login).orElse(null);
     }
 
     public void save(UserRegistrationDto registration) {
+        final String userId = UUID.randomUUID().toString();
         userRepository.save(User.builder()
-                .userId(UUID.randomUUID().toString())
+                .userId(userId)
                 .login(registration.getUsername())
                 .password(passwordEncoder.encode(registration.getPassword()))
                 .roles(Collections.singletonList(roleRepository.findByName(ROLE_USER)))
                 .build());
+        jdbcTemplate.update("INSERT INTO USERS_ROLES (USER_ID, ROLE_ID) VALUES (:userId, '1')", userId);
     }
 
     public User getCurrentUser() {

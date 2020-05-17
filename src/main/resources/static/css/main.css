@@ -75,6 +75,7 @@ tr.tasklist, ul.categoryList, tr.usersList {
     list-style-type: none;
     margin: 20px;
     padding: 0;
+    width: 50px;
 }
 
 td.tasklist:last-child, li.categoryList:last-child, td.usersList:last-child {
@@ -85,7 +86,7 @@ a.tasklist, a.categoryList, a.usersList {
     color: var(--font-color);
 }
 
-td.tasklist, li.categoryList, td.usersList {
+td.tasklist, li.categoryList{
     list-style-type: none;
     height: 50px;
     width: 900px;
@@ -99,7 +100,19 @@ td.tasklist, li.categoryList, td.usersList {
     display: block;
 }
 
-tr.tasklist:hover td.tasklist, li.categoryList:hover, tr.usersList:hover td.usersList {
+td.usersList {
+    list-style-type: none;
+    color: var(--font-color);
+    font: 200 20px/1.5 Helvetica, Verdana, sans-serif;
+    text-decoration: none;
+    -webkit-transition: font-size 0.3s ease, background-color 0.3s ease;
+    -moz-transition: font-size 0.3s ease, background-color 0.3s ease;
+    -o-transition: font-size 0.3s ease, background-color 0.3s ease;
+    transition: font-size 0.3s ease, background-color 0.3s ease;
+    display: block;
+}
+
+tr.tasklist:hover td.tasklist, li.categoryList:hover, td.usersList {
     font-size: 26px;
     width: 900px;
     text-decoration: none;

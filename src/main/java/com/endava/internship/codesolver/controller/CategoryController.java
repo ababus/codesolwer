@@ -1,17 +1,21 @@
 package com.endava.internship.codesolver.controller;
 
-import com.endava.internship.codesolver.logic.service.CategoryService;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
+import com.endava.internship.codesolver.logic.service.CategoryService;
+
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
+@Slf4j
 @RequestMapping
 @RequiredArgsConstructor
 public class CategoryController {
@@ -43,13 +47,19 @@ public class CategoryController {
     }
 
     @GetMapping("/saveCurrentCategory")
-    public String saveCurrentCategory(@RequestParam("oldName") String oldName, @RequestParam("newName") String newName, Model model, HttpServletRequest request) {
+    public String saveCurrentCategory(@RequestParam("oldName") String oldName,
+            @RequestParam("newName") String newName,
+            Model model,
+            HttpServletRequest request) {
 
-        //FIXME: verify: currently the UI says that there is an error even when it is not.
         request.getSession().removeAttribute("errorStack");
-        categoryService.updateCategory(oldName, newName);
-        request.getSession().setAttribute("errorStack", "This category already exists!");
-        model.addAttribute("errorStack", request.getSession().getAttribute("errorStack"));
+        try {
+            categoryService.updateCategory(oldName, newName);
+        } catch (Exception e) {
+            request.getSession().setAttribute("errorStack", "This category already exists!");
+            model.addAttribute("errorStack", request.getSession().getAttribute("errorStack"));
+            log.error(e.getMessage());
+        }
         return REDIRECT_PAGE;
     }
 }
