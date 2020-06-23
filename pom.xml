@@ -31,7 +31,7 @@
         <java.version>1.8</java.version>
         <flyway.version>5.2.1</flyway.version>
         <bootstrap.version>3.3.7</bootstrap.version>
-        <commons-beanutils.version>1.9.3</commons-beanutils.version>
+        <commons-beanutils.version>1.9.4</commons-beanutils.version>
         <springsecurity4.version>3.0.4.RELEASE</springsecurity4.version>
         <oracle.jdbc.version>12.2.0.1</oracle.jdbc.version>
     </properties>
