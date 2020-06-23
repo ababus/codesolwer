@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 @RequiredArgsConstructor
 public class HomePageController {
@@ -18,10 +20,11 @@ public class HomePageController {
     private final StatisticService statisticService;
 
     @GetMapping("/index")
-    public String getCode(Model model) {
+    public String getCode(Model model, HttpServletRequest request) {
         Map<String, String> tasks = taskService.getTasksForCurrentUser();
         model.addAttribute("tasks", tasks);
         model.addAttribute("status", statisticService.getStatusForCurrentTasks(tasks.keySet()));
+        request.getSession().removeAttribute("errorStack");
         return "/index";
     }
 

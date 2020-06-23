@@ -4,17 +4,6 @@
     <link rel="icon" href="templates/icons/favicon.ico"/>
     <div th:replace="fragments/header :: header-css"/>
     <title>CODESOLVER</title>
-    <!--    <script>-->
-    <!--        function deletePost(id) {-->
-    <!--            var ask = window.confirm("Are you sure you want to delete this task?");-->
-    <!--            if (ask) {-->
-    <!--                document.cookie = "taskId=" + id;-->
-    <!--                window.location.href = "deleteTask";-->
-    <!--                window.alert("This task was successfully deleted. ");-->
-    <!--            }-->
-    <!--        }-->
-
-    <!--    </script>-->
 </head>
 <body>
 <div th:replace="fragments/header :: header"/>
@@ -56,14 +45,14 @@
                         class="glyphicon glyphicon-file" aria-hidden="true"></span> </a></td>
 
                 <td class="tasklistEdit" th:if="${#request.isUserInRole('ROLE_ADMIN')}">
-                    <a th:value="${task.key}"><!-- th:onclick="'deletePost(\''+ ${task.key} +'\');'">-->
+                    <a th:value="${task.key}" th:href="'/deleteTask?taskId='+ ${task.key}">
                         <span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
 
             </tr>
             <tr th:if="${#request.isUserInRole('ROLE_ADMIN')}">
                 <td class="tasklist"></td>
                 <td colspan="2" class="tasklistNew">
-                    <a th:href="@{/mainAdmin}">
+                    <a th:href="@{/mainAdmin(taskId=${0}, testId =${0})}">
                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                         Add new task </a></td>
             </tr>

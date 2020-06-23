@@ -38,6 +38,8 @@ public class Task {
     @Column(name = "description")
     private String description;
 
+    private transient String categoryName;
+
     @OneToMany(fetch = FetchType.EAGER,
             mappedBy = "task",
             cascade = CascadeType.ALL)

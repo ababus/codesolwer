@@ -21,8 +21,8 @@
                     <a th:if="${user.isActive()} == false">
                         <span class="glyphicon glyphicon-user" style="color:darkred" title="Inactive"></span>
                     </a>
-                    <a class="usersList" th:text="' ' + ${user.getUsername()} + ' '"></a>
-<!--                                        <a style=" padding: 100px"> </a>-->
+                    <a class="usersList" th:text="' ' + ${user.getUsername()} + ' '"
+                       th:href="'/userAccount?username='+ ${user.getUsername()} "></a>
                 </td>
                 <td>
                     <span style="font-size: 20px; width: 50px; margin: 2px"
@@ -34,37 +34,40 @@
         </table>
     </div>
     <div class="usersList">
+        <form th:action="@{/adminRegistration}" th:object="${newUser}" method="post">
+            <h2 class="usersList">Add new user</h2>
 
-        <h2 class="usersList">Add new user</h2>
-        <table class="usersList">
+            <table class="usersList">
+                <tr class="usersList">
+                    <td class="usersListEdit">
+                        <input type="text" name="username" id="username" class="form-control input-lg"
+                               placeholder="UserName" style="height: 40px; width: 96%; "/>
+                    </td>
+                    <td class="usersListEdit">
+                        <input id="password"
+                               class="form-control"
+                               name="password"
+                               type="password"
+                               width="20"
+                               style="height: 40px;"
+                               pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$"
+                               placeholder="Password"/>
+                    </td>
 
-            <tr class="usersList">
-
-                <td class="usersList">
-                    <a class="usersList"> Username</a>
-                </td>
-                <td class="usersListEdit">
-                    <input id="firstPassword"
-                           class="form-control"
-                           placeholder="Password"
-                           type="password"
-                           title="Password must contains:
-                           At least 1 Uppercase
-                           At least 1 Lowercase
-                           At least 1 Number
-                           At least 1 Symbol, symbol allowed --> !@#$%^&*_=+-
-                           Minimum 8 chars and Maximum 12 chars"
-                           pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$"
-                    /></td>
-
-            </tr>
-            <tr>
-                <td class="usersList"></td>
-                <td class="usersListNew">
-                    <a><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add new user </a></td>
-            </tr>
-        </table>
-
+                </tr>
+                <tr>
+                    <td class="usersList"></td>
+                    <td class="usersListNew">
+                        <input type="submit"
+                               name="login-submit"
+                               id="login-submit"
+                               class="btn btn-lg btn-primary btn-block"
+                               style="background-color: #de411b; border: #de411b; "
+                               value="Add new user"/>
+                    </td>
+                </tr>
+            </table>
+        </form>
     </div>
 </div>
 <div th:replace="fragments/footer :: footer"/>

@@ -33,8 +33,34 @@ public class StatisticServiceImpl implements StatisticService {
     @Value("${numberOfAttempts}")
     private int maxAllowedAttempts;
 
+    @Value("${tasksPerUser}")
+    private int totalTasks;
+
+    public Map<String, String> getStatisticForUser(String username) {
+        List<UserStatistics> userStatisticsList = userStatisticsRepository.findByUserLogin(username);
+        return getUserStatistics(userStatisticsList);
+    }
+
     public Map<String, String> getStatisticForCurrentUser() {
-        List<UserStatistics> userStatisticsList = userStatisticsRepository.findByUser(userService.getCurrentUser());
+        final User currentUser = userService.getCurrentUser();
+        List<UserStatistics> userStatisticsList = userStatisticsRepository.findByUser(currentUser);
+        return getUserStatistics(userStatisticsList);
+    }
+
+    private Map<String, String> getDefaultStat() {
+        Map<String, String> resultMap = new HashMap<>();
+        resultMap.put("statistic", "No tasks found");
+        resultMap.put("success", "0");
+        resultMap.put("progress", "0");
+        resultMap.put("fail", "0");
+        resultMap.put("notAttempted", "0");
+        return resultMap;
+    }
+
+    private Map<String, String> getUserStatistics(final List<UserStatistics> userStatisticsList) {
+        if (totalTasks == 0) {
+            return getDefaultStat();
+        }
 
         StringBuilder summaryStatistics = new StringBuilder();
         long successfulTasks = 0;
@@ -56,7 +82,6 @@ public class StatisticServiceImpl implements StatisticService {
         }
 
         long failedTasks = userStatisticsList.size() - successfulTasks - inProgressTasks;
-        long totalTasks = taskRepository.count();
         long unAttemptedTasks = totalTasks - userStatisticsList.size();
 
         summaryStatistics.append(String.format("\nTOTAL: \n\t Passed: %2d\n\t Currently attempting:%2d\n\t Failed: %2d\n\t Not attempted: %2d",
@@ -64,10 +89,10 @@ public class StatisticServiceImpl implements StatisticService {
 
         Map<String, String> resultMap = new HashMap<>();
         resultMap.put("statistic", summaryStatistics.toString());
-        resultMap.put("success", String.valueOf(successfulTasks * 100 / totalTasks));
-        resultMap.put("progress", String.valueOf(inProgressTasks * 100 / totalTasks));
-        resultMap.put("fail", String.valueOf(failedTasks * 100 / totalTasks));
-        resultMap.put("notAttempted", String.valueOf(unAttemptedTasks * 100 / totalTasks));
+        resultMap.put("success", String.valueOf(Math.ceil(successfulTasks * 100 / ((double) totalTasks))));
+        resultMap.put("progress", String.valueOf(Math.ceil(inProgressTasks * 100 / (double) totalTasks)));
+        resultMap.put("fail", String.valueOf(Math.ceil(failedTasks * 100 / (double) totalTasks)));
+        resultMap.put("notAttempted", String.valueOf(Math.ceil(unAttemptedTasks * 100 / (double) totalTasks)));
 
         return resultMap;
     }

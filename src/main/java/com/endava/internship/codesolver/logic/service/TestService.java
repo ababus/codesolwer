@@ -1,11 +1,13 @@
 package com.endava.internship.codesolver.logic.service;
 
+import java.util.Map;
+import java.util.Optional;
+
+import org.springframework.stereotype.Service;
+
 import com.endava.internship.codesolver.logic.dto.TaskResult;
 import com.endava.internship.codesolver.model.entities.Task;
 import com.endava.internship.codesolver.model.entities.TestForTask;
-import org.springframework.stereotype.Service;
-
-import java.util.Map;
 
 @Service
 public interface TestService {
@@ -14,9 +16,9 @@ public interface TestService {
 
     Map<String, String> getMapOfTestNames(String taskId);
 
-    TestForTask findTestById(String id);
+    Optional<TestForTask> findTestById(String id);
 
-    void modifyTask(Task task, TestForTask test);
+    String modifyTask(Task task, TestForTask test);
 
     String addTestForTask(Task theTask, String newTestBody);
 

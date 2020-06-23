@@ -3,6 +3,8 @@ package com.endava.internship.codesolver.logic.service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.endava.internship.codesolver.logic.dto.TaskResult;
 import com.endava.internship.codesolver.logic.generators.CodeExecutorImpl;
+import com.endava.internship.codesolver.model.dao.CategoryDao;
 import com.endava.internship.codesolver.model.dao.TaskDao;
 import com.endava.internship.codesolver.model.dao.TestDao;
 import com.endava.internship.codesolver.model.entities.Task;
@@ -25,6 +28,8 @@ public class TestServiceImpl implements TestService {
 
     private static final String NO_TASK_FOUND = "No task found!";
 
+    private final CategoryDao categoryDao;
+
     private final TaskDao taskRepository;
 
     private final TestDao testRepository;
@@ -35,7 +40,7 @@ public class TestServiceImpl implements TestService {
         return codeExecutor.execute(classCode, getTestsForCurrentTask(taskId));
     }
 
-    public void modifyTask(Task task, TestForTask test) {
+    public String modifyTask(Task task, TestForTask test) {
 
         String taskTitle = task.getTaskTitle();
         String taskBody = task.getTaskBody();
@@ -49,15 +54,20 @@ public class TestServiceImpl implements TestService {
                     "Task code: \n" + task.getTaskBody() +
                     "Test code: \n " + test.getTestBody());
 
+            return taskResults.getResults();
+
         } else {
+            if (task.getCategory() != null && !categoryDao.existsByNameIgnoreCase(task.getCategory().getName())) {
+                categoryDao.save(task.getCategory());
+            }
             taskRepository.save(task);
             test.setTask(task);
+            testRepository.save(test);
+            log.info("Successfully updated the task :" + task.getTaskId() + "\t" + taskTitle + "\n" +
+                    "Updated test : " + test.getTestId() + "\t" + test.getTestBody());
+            return "Successfully updated the task";
         }
 
-        testRepository.save(test);
-
-        log.info("Successfully updated the task :" + task.getTaskId() + "\t" + taskTitle + "\n" +
-                "Updated test : " + test.getTestId() + "\t" + test.getTestBody());
     }
 
     public String addTestForTask(Task theTask, String newTestBody) {
@@ -70,6 +80,7 @@ public class TestServiceImpl implements TestService {
             TestForTask newTest = new TestForTask();
             newTest.setTask(theTask);
             newTest.setTestBody(newTestBody);
+            newTest.setTestId(UUID.randomUUID().toString());
             testRepository.save(newTest);
             return newTest.getTestId();
         }
@@ -89,9 +100,8 @@ public class TestServiceImpl implements TestService {
         return testNames;
     }
 
-    public TestForTask findTestById(String testId) {
-        return testRepository.findById(testId)
-                .orElseThrow(() -> new IllegalArgumentException(NO_TASK_FOUND));
+    public Optional<TestForTask> findTestById(String testId) {
+        return testRepository.findById(testId);
     }
 
     private List<TestForTask> getTests(String taskId) {

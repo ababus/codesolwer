@@ -16,7 +16,9 @@ import com.endava.internship.codesolver.logic.service.UserService;
 import com.endava.internship.codesolver.model.entities.User;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Controller
 @RequestMapping
 @RequiredArgsConstructor
@@ -59,6 +61,29 @@ public class UserRegistrationController {
 
         userService.save(userDto);
         return "redirect:/" + PAGE + "?success";
+    }
+
+    @GetMapping("/adminRegistration")
+    public String findAllUsersRedirect(Model model) {
+        model.addAttribute("users", userService.getAllUsers());
+        return "redirect:/users";
+    }
+
+    @PostMapping("/adminRegistration")
+    public String registerUserAccountFromAdmin(@ModelAttribute("user") @Valid UserRegistrationDto newUser, BindingResult result, Model model) {
+        User existing = userService.findByLogin(newUser.getUsername());
+        if (existing != null) {
+            result.rejectValue("username", null, "There is already an account registered with that username");
+            FieldError error = new FieldError("registrationNewUser", "username", "");
+            result.addError(error);
+
+            model.addAttribute("userError", "There is already an account registered with that username");
+            return "redirect:/users";
+        }
+
+        userService.save(newUser);
+        model.addAttribute("users", userService.getAllUsers());
+        return "redirect:/users";
     }
 
 }

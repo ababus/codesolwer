@@ -19,10 +19,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserServiceCustomImpl userService;
 
-
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/registration**", "/js/**", "/css/**", "/img/**", "/webjars/**")
+                .antMatchers("/error*", "/registration**", "/js/**", "/css/**", "/img/**", "/webjars/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
@@ -52,7 +51,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.setPasswordEncoder(passwordEncoder());
         return auth;
     }
-
 
     protected void configure(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(authenticationProvider());

@@ -11,7 +11,8 @@
     <br/>
     <br/>
     <h3> USERNAME:
-        <span th:text="${#authentication.getName()}"></span><br/><br/>
+        <span th:text="${#authentication.getName()}" th:if="${#authentication.getName()} != admin"></span>
+        <span th:text="${userStat}" th:if="${#authentication.getName()} == admin"></span><br/><br/>
         Your progress:
     </h3>
 </div>
@@ -19,7 +20,8 @@
 <div class="progress" style="width:90%; height: 55px; ">
     <div class="progress-bar progress-bar-success" role="progressbar"
          th:style="' position: relative; display: inline-block; width:'+ ${success} +'%;'">
-        <span class="text-progress" style="color: #f1f1f1; font-size: 17px;" th:if=" ${success} > 0 " >Passed</span></div>
+        <span class="text-progress" style="color: #f1f1f1; font-size: 17px;" th:if=" ${success} > 0 ">Passed</span>
+    </div>
     <div class="progress-bar progress-bar-warning" role="progressbar"
          th:style="' position: relative; display: inline-block; width:'+ ${progress} +'%;'">
         <span class="text-progress" style="color: #f1f1f1" th:if=" ${progress} > 0 ">Currently attempting</span></div>

@@ -1,6 +1,6 @@
 CREATE TABLE categories (
     category_id   VARCHAR(60),
-    category_name VARCHAR2(100) NOT NULL,
+    category_name VARCHAR2(100) NOT NULL UNIQUE,
     CONSTRAINT categories_pk
         PRIMARY KEY (category_id)
 );

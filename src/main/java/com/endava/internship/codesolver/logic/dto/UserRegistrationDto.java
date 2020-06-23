@@ -1,11 +1,12 @@
 package com.endava.internship.codesolver.logic.dto;
 
-import com.endava.internship.codesolver.controller.security.constraint.FieldMatch;
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
+
+import com.endava.internship.codesolver.controller.security.constraint.FieldMatch;
+
+import lombok.Getter;
+import lombok.Setter;
 
 @FieldMatch.List({
         @FieldMatch(first = "username", second = "confirmUsername", message = "The login fields must match"),
@@ -28,6 +29,6 @@ public class UserRegistrationDto {
     private String confirmUsername;
 
     @AssertTrue
-    private Boolean terms;
+    private Boolean terms = true;
 
 }

@@ -2,6 +2,7 @@ package com.endava.internship.codesolver.logic.service;
 
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +17,9 @@ public class LoginAttemptServiceImpl implements LoginAttemptService {
 
     private final UserDao userDao;
 
+    @Value("${numberOfAllowedAttempts}")
+    private int numberOfAllowedAttempts;
+
     public int getSuccessfulAttempts(final String username) {
         return userDao.findByLogin(username).map(User::getNumberOfAttempts).orElse(0);
     }
@@ -27,7 +31,7 @@ public class LoginAttemptServiceImpl implements LoginAttemptService {
         if (userOptional.isPresent()) {
             final User foundUser = userOptional.get();
             int numberOfAttempts = foundUser.getNumberOfAttempts();
-            if (numberOfAttempts > 3) {
+            if (numberOfAttempts > numberOfAllowedAttempts) {
                 foundUser.setActive(false);
             } else {
                 foundUser.setNumberOfAttempts(numberOfAttempts + 1);

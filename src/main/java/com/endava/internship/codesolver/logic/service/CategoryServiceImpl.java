@@ -32,6 +32,19 @@ public class CategoryServiceImpl implements CategoryService {
                 .collect(Collectors.toMap(Category::getCategoryId, Category::getName));
     }
 
+    @Override
+    public List<Category> getCategories() {
+        return categoryRepository.findAll();
+    }
+
+    @Override
+    public Optional<Category> getCategoryByName(final String categoryName) {
+        return categoryRepository.findAll()
+                .stream()
+                .filter(category -> category.getName().equalsIgnoreCase(categoryName))
+                .findFirst();
+    }
+
     public Map<Category, List<Task>> getCategoryTaskMap() {
         return taskRepository.findAll().stream()
                 .collect(Collectors.groupingBy(Task::getCategory));
@@ -39,13 +52,9 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Transactional
     public boolean addCategory(String categoryName) {
-        if (categoryRepository.existsByNameContainingIgnoreCase(categoryName.trim())) {
-            return false;
-        }
         categoryRepository.save(Category.builder().categoryId(UUID.randomUUID().toString()).name(categoryName).build());
         return true;
     }
-
 
     public void updateCategory(String oldName, String newName) {
         final Optional<Category> currentCategory = categoryRepository.findByNameContainingIgnoreCase(oldName);

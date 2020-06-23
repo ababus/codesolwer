@@ -1,30 +1,37 @@
 package com.endava.internship.codesolver.controller;
 
-import javax.servlet.http.Cookie;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.util.WebUtils;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.endava.internship.codesolver.logic.service.StatisticService;
 import com.endava.internship.codesolver.logic.service.TaskServiceImpl;
 
 import lombok.RequiredArgsConstructor;
 
 @Controller
-@RequestMapping("/deleteTask")
+@RequestMapping
 @RequiredArgsConstructor
 public class DeleteTaskController {
 
     private final TaskServiceImpl taskService;
 
-    @GetMapping
-    public String deleteTaskByID(HttpServletRequest request) {
-        final Cookie taskId = WebUtils.getCookie(request, "taskId");
-        if (taskId != null) {
-            taskService.deleteTaskById(taskId.getValue());
-        }
-        return "redirect:/index";
+    private final StatisticService statisticService;
+
+    @GetMapping("/deleteTask")
+    public String deleteTaskByID(@RequestParam("taskId") String taskId, Model model, HttpServletRequest request) {
+
+        taskService.deleteTaskById(taskId);
+        Map<String, String> tasks = taskService.getTasksForCurrentUser();
+        model.addAttribute("tasks", tasks);
+        model.addAttribute("status", statisticService.getStatusForCurrentTasks(tasks.keySet()));
+        request.getSession().removeAttribute("errorStack");
+        return "index";
     }
 }

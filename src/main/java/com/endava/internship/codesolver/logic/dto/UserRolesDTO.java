@@ -1,6 +1,7 @@
 package com.endava.internship.codesolver.logic.dto;
 
 import java.util.Collection;
+import java.util.Objects;
 
 import com.endava.internship.codesolver.model.entities.Role;
 
@@ -23,7 +24,10 @@ public class UserRolesDTO {
 
     public UserRolesDTO(String username, Collection<Role> roles, boolean active) {
         this.username = username;
-        roles.stream().findFirst().ifPresent(userRole -> this.role = userRole.getName());
+        roles.stream()
+                .filter(Objects::nonNull)
+                .findFirst()
+                .ifPresent(userRole -> this.role = userRole.getName());
         this.active = active;
     }
 }

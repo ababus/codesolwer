@@ -55,6 +55,7 @@ public class UserServiceImpl implements UserService {
                 .login(registration.getUsername())
                 .password(passwordEncoder.encode(registration.getPassword()))
                 .roles(Collections.singletonList(roleRepository.findByName(ROLE_USER)))
+                .active(true)
                 .build());
         jdbcTemplate.update("INSERT INTO USERS_ROLES (USER_ID, ROLE_ID) VALUES (:userId, '1')", userId);
     }

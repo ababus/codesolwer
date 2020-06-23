@@ -8,8 +8,10 @@
     <script>
         function myFunction(e) {
             var val = e.target.text;
-            document.getElementById("demo").innerHTML += '<div class="tags">' +
-                '<p><a  disabled="true" href="" class="color1" id="tagSelected" >' + val + '</a></p></div>';
+            document.getElementById("demo").innerHTML = '<div class="tags">' +
+                '<p><a  disabled="true" href="" class="color1" id="tagSelected">' +
+                val + '</a></p></div>';
+            document.getElementById("testCat").innerHTML = val;
         }
     </script>
 </head>
@@ -20,7 +22,8 @@
     <div>
         <h1 style="display: inline-block;">
                     <textarea id="task_name_adm" th:field="*{taskTitle}"
-                              th:text="${task.taskTitle}">Task name</textarea>
+                              th:text="${task.taskTitle}"
+                              placeholder="New Task Name">Task name</textarea>
         </h1>
 
         <div class="dropdown">
@@ -37,28 +40,19 @@
         <div class="dropdown">
             <button class="dropbtn" id="tags" disabled>Tags</button>
             <div class="dropdown-content">
-                <!--<a-->
-                <!--th:each="testsName : ${tests_names.entrySet()}"-->
-                <!--th:text="${testsName.value}"-->
-                <!--onclick="myFunction(event)"-->
-                <!--&gt;</a>-->
                 <a
-                        th:text="tag1"
+                        th:each="cat : ${categories}"
+                        th:text="${cat.name}"
                         onclick="myFunction(event)"
                 ></a>
-                <a
-                        th:text="tag2"
-                        onclick="myFunction(event)"
-                ></a>
-                <a
-                        th:text="tag3"
-                        onclick="myFunction(event)"
-                ></a>
+
             </div>
         </div>
 
         <div id="demo">
-
+            <div class="tags" th:if="${task.category != null}">
+                <p><a disabled="true" href="" class="color1" id="tagSelected" th:text="${task.category.name}"></a></p>
+            </div>
         </div>
 
     </div>
@@ -97,6 +91,7 @@
                         autocapitalize="off"
                         spellcheck="false"
                         style="margin-top: 0;"
+                        placeholder="Please enter valid task description"
                         th:field="*{description}"
                         th:text="${task.description}"></textarea>
 
@@ -119,7 +114,10 @@
             }
         </script>
     </div>
-
+    <div th:if="${session.errorStack != null}" class="alert alert-info" style="alignment: left; margin: 20px 0 -10px 17px;
+    width: 82%">
+        <span th:text="${session.errorStack}"></span>
+    </div>
     <table>
 
         <tr>
@@ -133,7 +131,15 @@
         <tr>
             <td colspan="2"> <textarea cols="86" rows="15" class="description" id="content"
                                        th:field="*{taskBody}"
-                                       th:text="${task.taskBody}">
+                                       th:text="${task.taskBody}"
+                                       placeholder="Please, note:
+- The return statement must be present
+- Otherwise, the code will not compile
+
+Sample task body:
+List<Privilege> getAllDistinctPrivileges(List<Users> users){
+    return new ArrayList<Privilege>();
+}">
                     Demo task description
                 </textarea>
 
@@ -151,7 +157,11 @@
                           spellcheck="false" autofocus
                           th:object=" ${currentTest}"
                           th:field="*{testBody}"
-                          th:text="${currentTest.testBody}"></textarea>
+                          th:text="${currentTest.testBody}"
+                          placeholder="Please, note:
+- the return type must be boolean
+- the method name should start with the prefix *test*
+- othewise, the code will not compile or will produce wrong results"></textarea>
 
         </tr>
 
@@ -175,9 +185,11 @@
         </tr>
 
     </table>
-
+    <textarea id="testCat" th:field="*{categoryName}" th:text="${task.categoryName}" style="display:none;">
+         <span th:if="${task.category != null}" th:text="${task.category.name}"></span>
+    </textarea>
 
 </form>
-<div th:replace="fragments/footer :: footer"/>
+<div th:replace=" fragments/footer :: footer"/>
 </body>
 </html>

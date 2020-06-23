@@ -35,14 +35,13 @@ public class CategoryController {
 
     @GetMapping("/addNewCategory")
     public String addNewCategory(@RequestParam("categoryName") String categoryName, Model model, HttpServletRequest request) {
+        request.getSession().removeAttribute("errorStack");
 
-        String errorMessage = "";
-
-        if (!categoryService.addCategory(categoryName)) {
-            errorMessage = "Category already exists";
+        if (!categoryService.getCategoryByName(categoryName).isPresent()) {
+            request.getSession().setAttribute("errorStack", "This category already exists!");
+            return REDIRECT_PAGE;
         }
-
-        model.addAttribute("errorStack", errorMessage);
+        categoryService.addCategory(categoryName);
         return REDIRECT_PAGE;
     }
 
@@ -53,6 +52,10 @@ public class CategoryController {
             HttpServletRequest request) {
 
         request.getSession().removeAttribute("errorStack");
+        if (!categoryService.getCategoryByName(newName).isPresent()) {
+            request.getSession().setAttribute("errorStack", "This category already exists!");
+            return REDIRECT_PAGE;
+        }
         try {
             categoryService.updateCategory(oldName, newName);
         } catch (Exception e) {
